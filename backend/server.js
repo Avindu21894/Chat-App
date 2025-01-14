@@ -4,17 +4,21 @@ import authRoutes from "./routes/auth.routes.js";
 import connectToMongoDB from "./db/connectToMongoDB.js";
 
 const app = express();
-dotenv.config(); //This give option to use environmental variable PORT, otherwise server run on port 5000
-
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT,() => {
-    console.log(`Listening on port,${PORT}`);
-    connectToMongoDB();
-});
+//This give option to use environmental variable PORT, otherwise server run on port 5000
+dotenv.config(); 
 
-app.get('/', function(req, res) {
-    res.send("Hello Everyone in the World!");
-});
+// To parse the incoming requests with JSON payloads (from req.body)
+app.use(express.json());
 
-app.use("/api/auth", authRoutes)
+app.use("/api/auth", authRoutes);
+
+// app.get('/', function(req, res) {
+//     res.send("Hello Everyone in the World!");
+// });
+
+app.listen(PORT, () => {
+  console.log(`Listening on port,${PORT}`);
+  connectToMongoDB();
+});
